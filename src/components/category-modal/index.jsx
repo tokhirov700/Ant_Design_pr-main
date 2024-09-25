@@ -3,7 +3,7 @@ import { Button, Modal, Input, message } from 'antd';
 import { categories } from '../../service';
 
 // eslint-disable-next-line react/prop-types
-const App = ({ handleClose, update: initialUpdate}) => {
+const App = ({ handleClose, update: initialUpdate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [update, setUpdate] = useState(initialUpdate);
@@ -17,7 +17,7 @@ const App = ({ handleClose, update: initialUpdate}) => {
     }
   };
 
-  const handleOk  = async () => {
+  const handleOk = async () => {
     try {
       if (update?.id) {
         await categories.put(update.id, { name: inputValue });
@@ -26,9 +26,10 @@ const App = ({ handleClose, update: initialUpdate}) => {
         await categories.create({ name: inputValue });
         message.success('Category created successfully!');
       }
-      handleClose(); 
+      handleClose();
+      setIsModalOpen(false); 
     } catch (error) {
-      console.error("Error occurred:", error);
+      console.error('Error occurred:', error);
       message.error('An error occurred while saving the category.');
     } finally {
       setInputValue('');
@@ -37,9 +38,9 @@ const App = ({ handleClose, update: initialUpdate}) => {
   };
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    setIsModalOpen(false); 
     setInputValue('');
-    setUpdate(null); 
+    setUpdate(null);
   };
 
   return (
@@ -47,14 +48,14 @@ const App = ({ handleClose, update: initialUpdate}) => {
       <Button type="primary" onClick={showModal}>
         Open Modal
       </Button>
-      <Modal 
-        title="Product Modal" 
-        open={isModalOpen} 
-        onOk={handleOk} 
+      <Modal
+        title="Product Modal"
+        open={isModalOpen}
+        onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Input 
-          placeholder="Enter product name" 
+        <Input
+          placeholder="Enter product name"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
@@ -64,4 +65,3 @@ const App = ({ handleClose, update: initialUpdate}) => {
 };
 
 export default App;
-
